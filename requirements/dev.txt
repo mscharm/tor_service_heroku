@@ -1,4 +1,0 @@
-# Place your development dependencies here
--r base.txt
-behave
-splinter
