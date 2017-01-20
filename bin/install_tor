@@ -3,9 +3,9 @@ set -eo pipefail
 
 echo "-----> Installing Tor"
 
-TOR_VERSION=0.2.4.24
+TOR_VERSION=0.2.9.8
 TOR_BASENAME="tor-${TOR_VERSION}"
-TOR_ARCHIVE="https://www.torproject.org/dist/${TOR_BASENAME}.tar.gz"
+TOR_ARCHIVE="https://dist.torproject.org/${TOR_BASENAME}.tar.gz"
 
 # make a temp directory
 tempdir="$( mktemp -t tor_XXXX )"
