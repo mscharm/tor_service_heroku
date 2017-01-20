@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+
 echo "-----> Installing Tor"
 
 TOR_VERSION=0.2.9.8
@@ -32,6 +36,26 @@ make install > /dev/null 2>&1
 popd
 rm -rf tor-build
 popd
+
+# Cache builds to avoid unnecessary wait times.
+echo $TOR_SRC_URL > $CACHE_DIR/.src-dist
+
+cat > ${BUILD_DIR}/bin/hide <<EOF
+#!/usr/bin/env bash
+mkdir -p "${HOME}/hidden_service"
+echo "Setting up hidden service"
+cat > ${HOME}/hidden_service/private_key <<EPK
+\${HIDDEN_PRIVATE_KEY}
+EPK
+echo \${HIDDEN_DOT_ONION} > ${HOME}/hidden_service/hostname
+echo "HiddenServiceDir ${HOME}/hidden_service/" > $HOME/etc/tor/torrc
+echo "HiddenServicePort 80 127.0.0.1:\${PORT}" >> $HOME/etc/tor/torrc
+# Use -f to be safe here.
+$HOME/bin/tor -f $HOME/etc/tor/torrc &
+exec \$*
+EOF
+
+chmod a+x ${BUILD_DIR}/bin/hide
 
 ln -s -f ../../vendor/tor/bin/tor .heroku/python/bin/tor
 ln -s -f ../../vendor/tor/bin/tor-gencert .heroku/python/bin/tor-gencert
