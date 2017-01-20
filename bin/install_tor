@@ -38,7 +38,7 @@ rm -rf tor-build
 popd
 
 # Cache builds to avoid unnecessary wait times.
-echo $TOR_SRC_URL > $CACHE_DIR/.src-dist
+echo $TOR_ARCHIVE > $CACHE_DIR/.src-dist
 
 cat > ${BUILD_DIR}/bin/hide <<EOF
 #!/usr/bin/env bash
