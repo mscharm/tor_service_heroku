@@ -20,7 +20,6 @@ tar -zxvf tmp-tor.tar.gz > /dev/null
 rm tmp-tor.tar.gz
 popd
 
-mkdir -v -p $BUILD_DIR/.heroku/vendor
 pushd $BUILD_DIR/.heroku/vendor
 rm -rf tor-build
 mv $tempdir/$TOR_BASENAME tor-build
@@ -33,6 +32,11 @@ popd
 rm -rf tor-build
 popd
 
+ln -s -f ../../vendor/tor/bin/tor .heroku/python/bin/tor
+ln -s -f ../../vendor/tor/bin/tor-gencert .heroku/python/bin/tor-gencert
+ln -s -f ../../vendor/tor/bin/torify .heroku/python/bin/torify
+ln -s -f ../../vendor/tor/bin/tor-resolve .heroku/python/bin/tor-resolve
+
 # Cache builds to avoid unnecessary wait times.
 echo $TOR_ARCHIVE > $CACHE_DIR/.src-dist
 
@@ -44,18 +48,13 @@ cat > ${HOME}/hidden_service/private_key <<EPK
 \${HIDDEN_PRIVATE_KEY}
 EPK
 echo \${HIDDEN_DOT_ONION} > ${HOME}/hidden_service/hostname
-echo "HiddenServiceDir ${HOME}/hidden_service/" > $HOME/etc/tor/torrc
-echo "HiddenServicePort 80 127.0.0.1:\${PORT}" >> $HOME/etc/tor/torrc
+echo "HiddenServiceDir ${HOME}/hidden_servic/" > $HOME/.heroku/vendor/tor/torrc
+echo "HiddenServicePort 80 127.0.0.1:\${PORT}" >> $HOME/.heroku/vendor/tor/torrc
 # Use -f to be safe here.
-$HOME/bin/tor -f $HOME/etc/tor/torrc &
+tor -f $HOME/.heroku/vendor/tor/torrc &
 exec \$*
 EOF
 
 chmod a+x ${BUILD_DIR}/bin/hide
-
-ln -s -f ../../vendor/tor/bin/tor .heroku/python/bin/tor
-ln -s -f ../../vendor/tor/bin/tor-gencert .heroku/python/bin/tor-gencert
-ln -s -f ../../vendor/tor/bin/torify .heroku/python/bin/torify
-ln -s -f ../../vendor/tor/bin/tor-resolve .heroku/python/bin/tor-resolve
 
 echo "-----> Finished installing tor"
