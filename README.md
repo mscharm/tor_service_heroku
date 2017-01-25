@@ -1,4 +1,4 @@
-# Toroku
+# Tor hidden for heroku
 Experimental Tor Hidden Service hosting on Heroku
 
 How do you get these variables?
