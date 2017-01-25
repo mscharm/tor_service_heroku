@@ -13,3 +13,8 @@ heroku$ tor -f tmptorrc
 heroku$ cat hidden/*
 heroku$ ^D
 ```
+Need multi-buildpacks install
+```
+heroku buildpacks:set https://github.com/heroku/heroku-buildpack-multi.git
+git push heroku
+```
