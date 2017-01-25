@@ -48,10 +48,10 @@ cat > ${HOME}/hidden_service/private_key <<EPK
 \${HIDDEN_PRIVATE_KEY}
 EPK
 echo \${HIDDEN_DOT_ONION} > ${HOME}/hidden_service/hostname
-echo "HiddenServiceDir ${HOME}/hidden_servic/" > $HOME/.heroku/vendor/tor/torrc
-echo "HiddenServicePort 80 127.0.0.1:\${PORT}" >> $HOME/.heroku/vendor/tor/torrc
+echo "HiddenServiceDir ${HOME}/hidden_servic/" > $HOME/tor/torrc
+echo "HiddenServicePort 80 127.0.0.1:\${PORT}" >> $HOME/tor/torrc
 # Use -f to be safe here.
-tor -f $HOME/.heroku/vendor/tor/torrc &
+tor -f $HOME/tor/torrc &
 exec \$*
 EOF
 
