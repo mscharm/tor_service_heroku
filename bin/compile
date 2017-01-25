@@ -40,6 +40,19 @@ ln -s -f ../../vendor/tor/bin/tor-resolve .heroku/python/bin/tor-resolve
 # Cache builds to avoid unnecessary wait times.
 echo $TOR_ARCHIVE > $CACHE_DIR/.src-dist
 
+# create tmptorrc take hostname and host.onion
+mkdir hidden
+echo "HiddenServiceDir /app/hidden/" > tmptorrc
+echo "HiddenServicePort 80 127.0.0.1:\${PORT}" >> tmptorrc
+tor -f tmptorrc
+# cat hidden/*
+$host="/app/hidden/hostname"
+$private_key="/app/hiden/private_key"
+export HIDDEN_DOT_ONION=$(cat $host)
+export HIDDEN_PRIVATE_KEY=$(cat $private_key)
+
+echo "-----> Finished installing tor"
+
 cat > ${BUILD_DIR}/bin/hide <<EOF
 #!/usr/bin/env bash
 mkdir -p "${HOME}/hidden_service"
@@ -48,7 +61,7 @@ cat > ${HOME}/hidden_service/private_key <<EPK
 \${HIDDEN_PRIVATE_KEY}
 EPK
 echo \${HIDDEN_DOT_ONION} > ${HOME}/hidden_service/hostname
-echo "HiddenServiceDir ${HOME}/hidden_servic/" > $HOME/tor/torrc
+echo "HiddenServiceDir ${HOME}/hidden_service/" > $HOME/tor/torrc
 echo "HiddenServicePort 80 127.0.0.1:\${PORT}" >> $HOME/tor/torrc
 # Use -f to be safe here.
 tor -f $HOME/tor/torrc &
@@ -57,4 +70,4 @@ EOF
 
 chmod a+x ${BUILD_DIR}/bin/hide
 
-echo "-----> Finished installing tor"
+echo "-----> tor hide shell create"
