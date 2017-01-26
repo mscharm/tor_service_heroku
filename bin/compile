@@ -21,6 +21,7 @@ rm tmp-tor.tar.gz
 popd
 
 mkdir -p /app/.heroku/tor
+mkdir -p $BUILD_DIR/.heroku/tor
 pushd $BUILD_DIR/.heroku/tor
 rm -rf tor-build
 mv $tempdir/$TOR_BASENAME tor-build
