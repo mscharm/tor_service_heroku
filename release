@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-cat << EOF
----
-config_vars:
-  PATH: $PATH:bin:/usr/bin:/bin:/app/bin
-EOF
