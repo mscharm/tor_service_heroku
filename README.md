@@ -13,8 +13,11 @@ heroku$ tor -f tmptorrc
 heroku$ cat hidden/*
 heroku$ ^D
 ```
-Need multi-buildpacks install
+For opencart 
+in root directory need hidden_service and tor folder
+also torrc file needed in tor folder
 ```
-heroku buildpacks:set https://github.com/heroku/heroku-buildpack-multi.git
-git push heroku
+mkdir hidden_service
+mkdir tor
+> tor/torrc
 ```
