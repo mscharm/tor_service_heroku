@@ -25,17 +25,17 @@ rm -rf tor-build
 mv $tempdir/$TOR_BASENAME tor-build
 pushd tor-build
 echo "-----> Building Tor"
-./configure --prefix=$BUILD_DIR/.heroku/vendor/tor --with-libevent-dir=$BUILD_DIR/.heroku/vendor/libevent > /dev/null 2>&1
+./configure --prefix=$BUILD_DIR/.heroku/vendor/tor > /dev/null 2>&1
 make > /dev/null 2>&1
 make install > /dev/null 2>&1
 popd
 rm -rf tor-build
 popd
 
-ln -s -f ../../vendor/tor/bin/tor .heroku/python/bin/tor
-ln -s -f ../../vendor/tor/bin/tor-gencert .heroku/python/bin/tor-gencert
-ln -s -f ../../vendor/tor/bin/torify .heroku/python/bin/torify
-ln -s -f ../../vendor/tor/bin/tor-resolve .heroku/python/bin/tor-resolve
+ln -s -f ../../vendor/tor/bin/tor .heroku/php/bin/tor
+ln -s -f ../../vendor/tor/bin/tor-gencert .heroku/php/bin/tor-gencert
+ln -s -f ../../vendor/tor/bin/torify .heroku/php/bin/torify
+ln -s -f ../../vendor/tor/bin/tor-resolve .heroku/php/bin/tor-resolve
 
 # Cache builds to avoid unnecessary wait times.
 echo $TOR_ARCHIVE > $CACHE_DIR/.src-dist
