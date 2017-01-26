@@ -20,8 +20,6 @@ tar -zxvf tmp-tor.tar.gz > /dev/null
 rm tmp-tor.tar.gz
 popd
 
-# PHP expects to be installed in /app/.heroku/php because of compiled paths, let's set that up!
-mkdir -p /app/.heroku
 mkdir -p $BUILD_DIR/.heroku/tor
 pushd $BUILD_DIR/.heroku/tor
 rm -rf tor-build
