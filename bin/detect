@@ -1,20 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-# The post_compile hook is run by heroku-buildpack-python
+# The post_compile hook is run
 
-echo "-----> I'm post-compile hook"
-
-if [ -f bin/compile_lib]; then
-    echo "-----> Running install_libevent"
-    chmod +x bin/compile_lib
-    bin/compile_lib
-fi
-
-if [ -f bin/compile ]; then
-    echo "-----> Running install tor_package"
-    chmod +x bin/compile
-    bin/compile
-fi
 
 echo "-----> Post-compile done"
