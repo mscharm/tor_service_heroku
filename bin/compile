@@ -20,40 +20,32 @@ tar -zxvf tmp-tor.tar.gz > /dev/null
 rm tmp-tor.tar.gz
 popd
 
-pushd $BUILD_DIR/.heroku/vendor
+mkdir -p $BUILD_DIR/.heroku/tor
+pushd $BUILD_DIR/.heroku/tor
 rm -rf tor-build
 mv $tempdir/$TOR_BASENAME tor-build
 pushd tor-build
 echo "-----> Building Tor"
-./configure --prefix=$BUILD_DIR/.heroku/vendor/tor > /dev/null 2>&1
+./configure --prefix=$BUILD_DIR/.heroku/tor > /dev/null 2>&1
 make > /dev/null 2>&1
 make install > /dev/null 2>&1
 popd
 rm -rf tor-build
 popd
 
-ln -s -f ../../vendor/tor/bin/tor .heroku/php/bin/tor
-ln -s -f ../../vendor/tor/bin/tor-gencert .heroku/php/bin/tor-gencert
-ln -s -f ../../vendor/tor/bin/torify .heroku/php/bin/torify
-ln -s -f ../../vendor/tor/bin/tor-resolve .heroku/php/bin/tor-resolve
+ln -s -f ../../tor/bin/tor .heroku/php/bin/tor
+ln -s -f ../../tor/bin/tor-gencert .heroku/php/bin/tor-gencert
+ln -s -f ../../tor/bin/torify .heroku/php/bin/torify
+ln -s -f ../../tor/bin/tor-resolve .heroku/php/bin/tor-resolve
 
 # Cache builds to avoid unnecessary wait times.
 echo $TOR_ARCHIVE > $CACHE_DIR/.src-dist
 
 # create tmptorrc take hostname and host.onion
-mkdir hidden
-echo "HiddenServiceDir /app/hidden/" > tmptorrc
-echo "HiddenServicePort 80 127.0.0.1:\${PORT}" >> tmptorrc
-tor -f tmptorrc
-# cat hidden/*
-$host="/app/hidden/hostname"
-$private_key="/app/hiden/private_key"
-export HIDDEN_DOT_ONION=$(cat $host)
-export HIDDEN_PRIVATE_KEY=$(cat $private_key)
 
 echo "-----> Finished installing tor"
 
-cat > ${BUILD_DIR}/bin/hide <<EOF
+cat > ${BUILD_DIR}/tor/bin/hide <<EOF
 #!/usr/bin/env bash
 mkdir -p "${HOME}/hidden_service"
 echo "Setting up hidden service"
@@ -67,7 +59,7 @@ echo "HiddenServicePort 80 127.0.0.1:\${PORT}" >> $HOME/tor/torrc
 tor -f $HOME/tor/torrc &
 exec \$*
 EOF
-
 chmod a+x ${BUILD_DIR}/bin/hide
+ln -s -f ../../tor/bin/hide .heroku/php/bin/hide
 
 echo "-----> tor hide shell create"
