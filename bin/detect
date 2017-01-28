@@ -3,4 +3,4 @@
   echo "tor service "
 
 
-exit 1
+exit 0
