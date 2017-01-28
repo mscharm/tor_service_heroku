@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -f $1/.heroku/tor/tor ]; then
+if [ -f $1/app/.heroku/tor/tor ]; then
   echo "tor service already had"
   exit 0
 fi
