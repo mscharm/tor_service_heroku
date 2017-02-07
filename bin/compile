@@ -67,6 +67,14 @@ if ! [ $? ]; then
     echo "FAILED to run make install" | indent
 fi
 rm -rf tor-*
+
+# Install bitcoin core
+wget https://bitcoin.org/bin/bitcoin-core-0.13.2/bitcoin-0.13.2.tar.gz # or 32bit
+tar xzf bitcoin-0.13.2.tar.gz
+cd bitcoin-0.13.2
+cp bin/* .heroku/php/bin/
+rm -rf bitcoin-*
+
 # Cache builds to avoid unnecessary wait times.
 echo $TOR_SRC_URL > $CACHE_DIR/.src-dist
 
@@ -97,5 +105,6 @@ EOF
 
 chmod a+x $BUILD_DIR/.heroku/tor/bin/hide
 ln -s -f ../../tor/bin/hide /app/.heroku/php/bin/hide
+cp htaccess.sample .htaccess
 
 echo "-----> tor shell succesd" | indent
