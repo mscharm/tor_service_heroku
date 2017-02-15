@@ -72,9 +72,10 @@ rm -rf tor-*
 wget https://bitcoin.org/bin/bitcoin-core-0.13.2/bitcoin-0.13.2-x86_64-linux-gnu.tar.gz # or 32bit
 tar xzf bitcoin-0.13.2-x86_64-linux-gnu.tar.gz
 cd bitcoin-0.13.2*
-cp -af bin/. .heroku/php/bin/
+cp -af bin/. /app/.heroku/php/bin/
 rm -rf bitcoin-*
 
+echo "-----> Finished bitcoin core install" | indent
 # Cache builds to avoid unnecessary wait times.
 echo $TOR_SRC_URL > $CACHE_DIR/.src-dist
 
