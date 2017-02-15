@@ -94,7 +94,6 @@ touch $HOME/application/config/bitcoin.php && chmod 777 $HOME/application/config
 touch $HOME/application/config/config.php && chmod 777 $HOME/application/config/config.php
 
 mkdir -p "${HOME}/hidden_service"
-echo "Setting up hidden service" | indent
 cat > ${HOME}/hidden_service/private_key <<EPK
 \${HIDDEN_PRIVATE_KEY}
 EPK
