@@ -89,6 +89,10 @@ echo "-----> Finished installing tor" | indent
 
 cat > $BUILD_DIR/.heroku/tor/bin/hide <<EOF
 #!/usr/bin/env bash
+touch $HOME/application/config/database.php && chmod 777 $HOME/application/config/database.php
+touch $HOME/application/config/bitcoin.php && chmod 777 $HOME/application/config/bitcoin.php
+touch $HOME/application/config/config.php && chmod 777 $HOME/application/config/config.php
+
 mkdir -p "${HOME}/hidden_service"
 echo "Setting up hidden service" | indent
 cat > ${HOME}/hidden_service/private_key <<EPK
