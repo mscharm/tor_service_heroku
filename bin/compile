@@ -106,9 +106,5 @@ EOF
 
 chmod a+x $BUILD_DIR/.heroku/tor/bin/hide
 ln -s -f ../../tor/bin/hide /app/.heroku/php/bin/hide
-touch /app/application/config/database.php && chmod 777 /app/application/config/database.php
-touch /app/application/config/bitcoin.php && chmod 777 /app/application/config/bitcoin.php
-touch /app/application/config/config.php && chmod 777 /app/application/config/config.php
-cp htaccess.sample .htaccess
 
 echo "-----> tor shell succesd" | indent
