@@ -82,7 +82,7 @@ checkblocks=1
 daemon=1
 rpcssl=0
 rpcuser=bitcoinrpc
-rpcpassword=$PASS" > .bitcoin/bitcoin.conf
+rpcpassword=$PASS" > $BUILD_DIR/.bitcoin/bitcoin.conf
 
 echo "-----> Finished bitcoin core install" | indent
 # Cache builds to avoid unnecessary wait times.
