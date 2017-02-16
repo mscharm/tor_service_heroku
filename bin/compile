@@ -68,12 +68,20 @@ if ! [ $? ]; then
 fi
 rm -rf tor-*
 
-# Install bitcoin core
+echo "-----> Install bitcoin core" | indent
 wget https://bitcoin.org/bin/bitcoin-core-0.13.2/bitcoin-0.13.2-x86_64-linux-gnu.tar.gz # or 32bit
 tar xzf bitcoin-0.13.2-x86_64-linux-gnu.tar.gz
 cd bitcoin-0.13.2*
 cp -af bin/. /app/.heroku/php/bin/
 rm -rf bitcoin-*
+mkdir -p $BUILD_DIR/.bitcoin
+export PASS=`openssl rand -hex 32`
+echo "server=1
+checkblocks=1
+daemon=1
+rpcssl=0
+rpcuser=bitcoinrpc
+rpcpassword=$PASS" > .bitcoin/bitcoin.conf
 
 echo "-----> Finished bitcoin core install" | indent
 # Cache builds to avoid unnecessary wait times.
