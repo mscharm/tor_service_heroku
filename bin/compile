@@ -69,7 +69,7 @@ fi
 rm -rf tor-*
 
 echo "-----> Install bitcoin core" | indent
-echo "PORT:"$PORT
+# echo "PORT:"$PORT
 wget https://bitcoin.org/bin/bitcoin-core-0.13.2/bitcoin-0.13.2-x86_64-linux-gnu.tar.gz # or 32bit
 tar xzf bitcoin-0.13.2-x86_64-linux-gnu.tar.gz
 cd bitcoin-0.13.2*
